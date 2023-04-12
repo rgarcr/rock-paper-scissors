@@ -1,17 +1,24 @@
 /** Rock Paper Scissor game
  * User enters a choice
  * Computer randomly selects a choice
- * Compare and run 5 times
  * keep track of scores and print results
  */
 
 //scores
+let round = 0;
 let playerScore = 0;
 let computerScore = 0;
+let result = document.querySelector(".result");
+document.querySelectorAll('.selection').forEach(node => node.addEventListener('click', payGame));
 
+function payGame(e){
+  if (round < 5)
+    result.textContent = playRound(e.target.innerText.toLowerCase(), getComputerChoice());
+  else
+    result.textContent = printScores();
+}
 
 //get a random number 0-2
-//return either rock, paper, scissor
 function getComputerChoice() {
   let choices = ['rock', 'paper', 'scissor']
   let randomNum = Math.floor(Math.random() * 3);
@@ -23,7 +30,9 @@ function getComputerChoice() {
 //play a round of the user choice vs the computer choice
 //compare choices, update scores return winner
 function playRound(playerSelection, computerSelection) {
-  console.log(playerSelection, computerSelection)
+  console.log(playerSelection, computerSelection, round)
+  round++;
+
   if (playerSelection === computerSelection)
     return `Draw ${playerSelection} === ${computerSelection}`
 
@@ -61,33 +70,13 @@ function playRound(playerSelection, computerSelection) {
 
 }
 
-//test round
-
-//play 5 rounds of rock paper scissor
-//compare results and console the winner
-//prompt the user for an answer
-//if user enter invalid choice, loop until valid 
-//loop 5 times
-function game() {
-  for (let i = 0; i < 5; i++) {
-    let answer = prompt('Rock, Paper, or Scissor?').toLocaleLowerCase();
-    while (answer != 'rock' && answer != 'paper' && answer != 'scissor') {
-      answer = prompt(`${answer} is not a valid choice. Rock, Paper, or Scissor?`).toLocaleLowerCase();
-    }
-    console.log(playRound(answer, getComputerChoice()))
-  }
-  printScores();
-
-}
-game();
-
 function printScores() {
   console.log(playerScore, computerScore)
   if (playerScore > computerScore)
-    console.log(`Player Wins with ${playerScore} points`)
+    return (`Player Wins with ${playerScore} points`)
   else if (computerScore > playerScore)
-    console.log(`Computer Wins with ${computerScore} points`)
+    return (`Computer Wins with ${computerScore} points`)
   else
-    console.log(`Draw!`)
+    return (`Draw! Nobody wins!`)
 
 }
