@@ -13,9 +13,11 @@ document.querySelectorAll('.selection').forEach(node => node.addEventListener('c
 
 function payGame(e){
   if (round < 5)
-    result.textContent = playRound(e.target.innerText.toLowerCase(), getComputerChoice());
-  else
-    result.textContent = printScores();
+    result.innerHTML +='<br>' + playRound(e.target.innerText.toLowerCase(), getComputerChoice());
+  if(round===5)
+    result.innerHTML += ' <br> ' + printScores();
+    round++;
+
 }
 
 //get a random number 0-2
@@ -30,40 +32,37 @@ function getComputerChoice() {
 //play a round of the user choice vs the computer choice
 //compare choices, update scores return winner
 function playRound(playerSelection, computerSelection) {
-  console.log(playerSelection, computerSelection, round)
-  round++;
-
   if (playerSelection === computerSelection)
     return `Draw ${playerSelection} === ${computerSelection}`
 
   if (playerSelection === 'rock') {
     if (computerSelection === 'paper') {
       computerScore++;
-      return 'Computer won'
+      return 'rock loses to paper, Computer won'
     }
     else {
       playerScore++;
-      return 'Player won'
+      return 'rock beats scissor, Player won'
     }
   }
   if (playerSelection === 'paper') {
     if (computerSelection === 'scissor') {
       computerScore++;
-      return 'Computer won'
+      return 'paper loses to scissor, Computer won'
     }
     else {
       playerScore++;
-      return 'Player won'
+      return 'paper beats rock, Player won'
     }
   }
   if (playerSelection === 'scissor') {
     if (computerSelection === 'rock') {
       computerScore++;
-      return 'Computer won'
+      return 'scissor loses to rock, Computer won'
     }
     else {
       playerScore++;
-      return 'Player won'
+      return 'scissor beats paper, Player won'
     }
 
   }
